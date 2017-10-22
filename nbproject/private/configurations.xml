@@ -21,9 +21,6 @@
           </df>
           <df name="CMakeTmp">
           </df>
-          <df name="Progress">
-            <in>count.txt</in>
-          </df>
           <df name="uno_CORE.dir">
             <df name="opt">
               <df name="arduino-1.8.1">
@@ -134,6 +131,8 @@
       <in>amp_display.h</in>
       <in>amp_timer.h</in>
       <in>digitalWriteFast.h</in>
+      <in>wav_gen.cpp</in>
+      <in>wav_gen.h</in>
       <in>wav_rotary.cpp</in>
       <in>wav_rotary.h</in>
     </df>

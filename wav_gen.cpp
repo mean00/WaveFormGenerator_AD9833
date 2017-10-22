@@ -29,50 +29,38 @@
 
 
 #include <AD9833.h>
-#include <Rotary.h>
-#include "amp_display.h"
-#include "wav_rotary.h"
 #include "wav_gen.h"
-
-
-ampDisplay      *display;
-WavRotary       *rotary;
-WavGenerator    *gen;
-
-int signal=0;
-
-void setup() 
-{ 
-    while (!Serial);          // Delay until terminal opens
-    Serial.begin(57600);
-    Serial.println("*Start*");
-    display=new ampDisplay;
-    rotary= new WavRotary(1,2,3);
-    gen=    new WavGenerator(4);
-    Serial.println("*Init done*");
-}
-
-void loop() { 
-  
-    switch(rotary->getSense())
-    {
-        default:
-            break;
-
-        case WavLeft:
-            Serial.println("Clockwise\n");
-            signal=(signal+2)%3;
-            gen->SetWaveForm((WavWave)signal);
-            display->displayStatus(">>");
-            break;
-        case WavRight:
-            Serial.println("CounterClockwise\n");
-            signal=(signal+1)%3;
-            gen->SetWaveForm((WavWave)signal);
-            display->displayStatus("<<");
-            break;
+ WavGenerator::WavGenerator(int csPin) : _gen(csPin)
+ {
+     _cs=csPin;
+     _gen.Begin();
+     _gen.EnableOutput(true);
+ }
+/**
+ */
+ void    WavGenerator::SetWaveForm(WavWave wave)
+ {
+     WaveformType waveType;
+     switch(wave)
+     {
+     case WavSinus:
+         waveType = SINE_WAVE;
+         break;
+     case WavTriangle:
+         waveType = TRIANGLE_WAVE;
+         break;
+     case WavSquare:
+         waveType = SQUARE_WAVE;
+         break;
     }
-    
+    _gen.SetWaveform(REG1,waveType);   // Next waveform
+    _gen.SetWaveform(REG0,waveType);
+    _gen.SetOutputSource(REG1);        // 
+ }
+ /**
+  */
+void    WavGenerator::SetFrequency(float fq)
+{
+    _gen.SetFrequency(REG1,fq);
 }
-
-
+// EOF
