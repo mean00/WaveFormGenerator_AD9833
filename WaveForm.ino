@@ -24,13 +24,14 @@
  * 
  * Rotarty encoder
  * https://www.allaboutcircuits.com/projects/how-to-use-a-rotary-encoder-in-a-mcu-based-project/
- * 
+ * https://github.com/brianlow/Rotary
  */
 
 
 #include <AD9833.h>
-#include <rotary.h>
+#include <Rotary.h>
 #include "amp_display.h"
+#include "wav_rotary.h"
 
 
 #define RUNNING       F("\tRUNNING")
@@ -42,6 +43,7 @@
 // Some macros to 'improve' readability
 
 ampDisplay display;
+WavRotary  rotary(1,2,3);
 /*
  * We need to manually call serialEventRun since we're not returning through the loop()
  * function while inside the test functions. If a character is in the receive buffer,
@@ -66,6 +68,7 @@ void setup() {
 
     while (!Serial);          // Delay until terminal opens
     Serial.begin(57600);
+    Serial.println("*Start*");
 
     // This MUST be the first command after declaring the AD9833 object
     gen.Begin();              // The loaded defaults are 1000 Hz SINE_WAVE using REG0
@@ -79,7 +82,18 @@ void setup() {
 void loop() { 
     static bool outputOn = false;
 
-
+    switch(rotary.getSense())
+    {
+        case WavLeft:
+            Serial.println("Clockwise\n");
+            break;
+        case WavRight:
+            Serial.println("CounterClockwise\n");
+            break;
+        default:
+            break;
+    }
+    
     if ( Serial.available() ) {
         char ch = Serial.read();
 

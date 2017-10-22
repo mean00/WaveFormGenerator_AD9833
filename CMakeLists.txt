@@ -47,6 +47,7 @@ generate_arduino_firmware(ampmeter
                 LIBS ${libPrefix}Wire 
                 LIBS ${libPrefix}U8glib 
                 LIBS ${libPrefix}SPI 
+                LIBS ${libPrefix}Rotary 
                 PORT ${ARDUINO_DEFAULT_PORT}
                 )
 

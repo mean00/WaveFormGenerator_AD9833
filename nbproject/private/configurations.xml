@@ -21,80 +21,8 @@
           </df>
           <df name="CMakeTmp">
           </df>
-          <df name="nano_CORE.dir">
-            <df name="opt">
-              <df name="arduino-1.8.1">
-                <df name="hardware">
-                  <df name="arduino">
-                    <df name="avr">
-                      <df name="cores">
-                        <df name="arduino">
-                        </df>
-                      </df>
-                    </df>
-                  </df>
-                </df>
-              </df>
-            </df>
-            <in>link.txt</in>
-          </df>
-          <df name="nano_SPI.dir">
-            <df name="opt">
-              <df name="arduino-1.8.1">
-                <df name="hardware">
-                  <df name="arduino">
-                    <df name="avr">
-                      <df name="libraries">
-                        <df name="SPI">
-                          <df name="src">
-                          </df>
-                        </df>
-                      </df>
-                    </df>
-                  </df>
-                </df>
-              </df>
-            </df>
-            <in>link.txt</in>
-          </df>
-          <df name="nano_U8glib.dir">
-            <df name="home">
-              <df name="fx">
-                <df name="Arduino">
-                  <df name="libraries">
-                    <df name="U8glib">
-                      <df name="utility">
-                      </df>
-                    </df>
-                  </df>
-                </df>
-              </df>
-            </df>
-            <in>link.txt</in>
-          </df>
-          <df name="nano_WaveForm.dir">
-            <in>link.txt</in>
-          </df>
-          <df name="nano_Wire.dir">
-            <df name="opt">
-              <df name="arduino-1.8.1">
-                <df name="hardware">
-                  <df name="arduino">
-                    <df name="avr">
-                      <df name="libraries">
-                        <df name="Wire">
-                          <df name="src">
-                            <df name="utility">
-                            </df>
-                          </df>
-                        </df>
-                      </df>
-                    </df>
-                  </df>
-                </df>
-              </df>
-            </df>
-            <in>link.txt</in>
+          <df name="Progress">
+            <in>count.txt</in>
           </df>
           <df name="uno_CORE.dir">
             <df name="opt">
@@ -106,6 +34,19 @@
                         <df name="arduino">
                         </df>
                       </df>
+                    </df>
+                  </df>
+                </df>
+              </df>
+            </df>
+            <in>link.txt</in>
+          </df>
+          <df name="uno_Rotary.dir">
+            <df name="home">
+              <df name="fx">
+                <df name="Arduino">
+                  <df name="libraries">
+                    <df name="Rotary">
                     </df>
                   </df>
                 </df>
@@ -193,6 +134,8 @@
       <in>amp_display.h</in>
       <in>amp_timer.h</in>
       <in>digitalWriteFast.h</in>
+      <in>wav_rotary.cpp</in>
+      <in>wav_rotary.h</in>
     </df>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
