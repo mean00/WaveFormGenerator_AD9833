@@ -134,6 +134,8 @@
       <in>amp_display.h</in>
       <in>amp_timer.h</in>
       <in>digitalWriteFast.h</in>
+      <in>wav_display.cpp</in>
+      <in>wav_display.h</in>
       <in>wav_gen.cpp</in>
       <in>wav_gen.h</in>
       <in>wav_rotary.cpp</in>

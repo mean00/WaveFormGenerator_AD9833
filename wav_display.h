@@ -7,7 +7,7 @@
 /**
  * 
  */
-class ampDisplay
+class WavDisplay
 {
 public:
   /**
@@ -22,19 +22,15 @@ public:
      *   Reset=Pin 10
   */
   
-    ampDisplay();
+    WavDisplay();
     /**
      */
-    ~ampDisplay()
+    ~WavDisplay()
     {
       
     }
     void displayStatus      (const char *st);
-    void displayCurrent     (float c);
-    void displayWarning     (const char *one, const char *two);
-    void displayInfo        (float current,float busVoltage,double Q,int mn,int sec);
-    void displayChargeInfo  (float current,float busVoltage,double Q,int mn,int sec);
-    void displayDone        (double Q,int totalTimeMinute);
+    void update         (int waveForm, int hiDigit, int lowDigit, float fq);
 
 protected:
     U8GLIB_SSD1306_128X64 u8g;

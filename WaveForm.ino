@@ -30,7 +30,7 @@
 
 #include <AD9833.h>
 #include <Rotary.h>
-#include "amp_display.h"
+#include "wav_display.h"
 #include "wav_rotary.h"
 #include "wav_gen.h"
 #include "wav_run.h"
@@ -38,7 +38,7 @@
 
 extern void runLoop(void);
 
-ampDisplay      *display;
+WavDisplay      *display;
 WavRotary       *rotary;
 WavGenerator    *gen;
 
@@ -51,7 +51,7 @@ void setup()
     while (!Serial);          // Delay until terminal opens
     Serial.begin(57600);
     Serial.println("*Start*");
-    display=new ampDisplay;
+    display=new WavDisplay;
     rotary= new WavRotary(1,2,3);
     gen=    new WavGenerator(4);
     Serial.println("*Init done*");

@@ -2,11 +2,11 @@
  */
 #include <AD9833.h>
 #include <Rotary.h>
-#include "amp_display.h"
+#include "wav_display.h"
 #include "wav_rotary.h"
 #include "wav_gen.h"
 
-extern ampDisplay      *display;
+extern WavDisplay      *display;
 extern WavRotary       *rotary;
 extern WavGenerator    *gen;
 

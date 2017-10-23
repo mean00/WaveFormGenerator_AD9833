@@ -12,7 +12,7 @@ project(ArduinoExample C CXX)
 #
 # FOR UNO
 set(ARDUINO_DEFAULT_BOARD uno)        # Default Board ID, when not specified
-set(ARDUINO_DEFAULT_PORT /dev/ttyACM0) # Default Port, when not specified
+set(ARDUINO_DEFAULT_PORT /dev/ttyACM1) # Default Port, when not specified
 #set(ARDUINO_CPU          atmega328)
 
 # this is needed for the nano, it should be set automatically, maybe something changed with sdk 1.8.x ?
