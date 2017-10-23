@@ -1,9 +1,7 @@
 /***************************************************************************
   
  ***************************************************************************/
-
 #include <Wire.h>
-#include <SPI.h>
 #include "wav_display.h"
 
 
@@ -26,7 +24,7 @@ static int getPercentFromVoltage(int mv);
     u8g.firstPage();  
     do
     {    
-    u8g.setFont(u8g_font_ncenB24);
+    u8g.setFont(u8g_font_7x13B);
     u8g.drawStr(0, 32, "WaveForm");
     }
     while(u8g.nextPage());  

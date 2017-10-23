@@ -21,8 +21,18 @@
           </df>
           <df name="CMakeTmp">
           </df>
-          <df name="Progress">
-            <in>count.txt</in>
+          <df name="uno_AD9833.dir">
+            <df name="home">
+              <df name="fx">
+                <df name="Arduino">
+                  <df name="libraries">
+                    <df name="AD9833">
+                    </df>
+                  </df>
+                </df>
+              </df>
+            </df>
+            <in>link.txt</in>
           </df>
           <df name="uno_CORE.dir">
             <df name="opt">
@@ -127,11 +137,9 @@
         </df>
       </df>
       <in>AD9833.cpp</in>
-      <in>AD9833.h</in>
       <in>CMakeLists.txt</in>
       <in>WaveForm.ino</in>
       <in>amp_display.cpp</in>
-      <in>amp_display.h</in>
       <in>amp_timer.h</in>
       <in>digitalWriteFast.h</in>
       <in>wav_display.cpp</in>

@@ -62,6 +62,7 @@ Action *currentWidget=&top;
 
 void runLoop()
 {
+    static int dbg=0;
     bool redraw=true;
     switch(rotary->getSense())
     {
@@ -78,8 +79,9 @@ void runLoop()
     }
     if(redraw)
     {
-        char ST[]="  ";
+        char ST[]="   ";
         ST[0]='A'+top.getIndex();
+        ST[1]='0'+dbg++;
         display->displayStatus(ST);
     }
     

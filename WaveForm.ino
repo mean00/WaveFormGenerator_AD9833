@@ -16,7 +16,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU General Public License for more details. You should have received a copy of
  * the GNU General Public License along with this program.
- * If not, see <http://www.gnu.org/licenses/>.
+ * If not, see <http://www.gnu.org/licenses/>. 
  *
  * This example code is in the public domain.
  * 
@@ -27,7 +27,7 @@
  * https://github.com/brianlow/Rotary
  */
 
-
+#include <SPI.h>
 #include <AD9833.h>
 #include <Rotary.h>
 #include "wav_display.h"
@@ -55,6 +55,7 @@ void setup()
     rotary= new WavRotary(1,2,3);
     gen=    new WavGenerator(4);
     Serial.println("*Init done*");
+    display->displayStatus("Go");
 }
 /**
  * 

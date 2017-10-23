@@ -27,7 +27,7 @@
  * https://github.com/brianlow/Rotary
  */
 
-
+#include <SPI.h>
 #include <AD9833.h>
 #include "wav_gen.h"
  WavGenerator::WavGenerator(int csPin) : _gen(csPin)

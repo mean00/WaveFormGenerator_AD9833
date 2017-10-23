@@ -12,7 +12,7 @@ project(ArduinoExample C CXX)
 #
 # FOR UNO
 set(ARDUINO_DEFAULT_BOARD uno)        # Default Board ID, when not specified
-set(ARDUINO_DEFAULT_PORT /dev/ttyACM1) # Default Port, when not specified
+set(ARDUINO_DEFAULT_PORT /dev/ttyACM0) # Default Port, when not specified
 #set(ARDUINO_CPU          atmega328)
 
 # this is needed for the nano, it should be set automatically, maybe something changed with sdk 1.8.x ?
@@ -44,9 +44,10 @@ SET(libPrefix ${ARDUINO_DEFAULT_BOARD}_)
 generate_arduino_firmware(ampmeter 
                 SKETCH .              # Folder to get the .ino from, must follow DIR_NAME/DIR_NAME.ino patten !
                ## SRCS  ampmeter.ino amp_display.cpp
+                LIBS ${libPrefix}AD9833
                 LIBS ${libPrefix}Wire 
-                LIBS ${libPrefix}U8glib 
                 LIBS ${libPrefix}SPI 
+                LIBS ${libPrefix}U8glib 
                 LIBS ${libPrefix}Rotary 
                 PORT ${ARDUINO_DEFAULT_PORT}
                 )
