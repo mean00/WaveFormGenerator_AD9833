@@ -21,6 +21,9 @@
           </df>
           <df name="CMakeTmp">
           </df>
+          <df name="Progress">
+            <in>count.txt</in>
+          </df>
           <df name="uno_CORE.dir">
             <df name="opt">
               <df name="arduino-1.8.1">
@@ -135,6 +138,8 @@
       <in>wav_gen.h</in>
       <in>wav_rotary.cpp</in>
       <in>wav_rotary.h</in>
+      <in>wav_run.cpp</in>
+      <in>wav_run.h</in>
     </df>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>

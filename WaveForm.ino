@@ -33,14 +33,19 @@
 #include "amp_display.h"
 #include "wav_rotary.h"
 #include "wav_gen.h"
+#include "wav_run.h"
 
+
+extern void runLoop(void);
 
 ampDisplay      *display;
 WavRotary       *rotary;
 WavGenerator    *gen;
 
-int signal=0;
 
+/**
+ * 
+ */
 void setup() 
 { 
     while (!Serial);          // Delay until terminal opens
@@ -51,27 +56,13 @@ void setup()
     gen=    new WavGenerator(4);
     Serial.println("*Init done*");
 }
-
-void loop() { 
-  
-    switch(rotary->getSense())
-    {
-        default:
-            break;
-
-        case WavLeft:
-            Serial.println("Clockwise\n");
-            signal=(signal+2)%3;
-            gen->SetWaveForm((WavWave)signal);
-            display->displayStatus(">>");
-            break;
-        case WavRight:
-            Serial.println("CounterClockwise\n");
-            signal=(signal+1)%3;
-            gen->SetWaveForm((WavWave)signal);
-            display->displayStatus("<<");
-            break;
-    }
+/**
+ * 
+ */
+void loop() 
+{ 
+    runLoop();
+   
     
 }
 
