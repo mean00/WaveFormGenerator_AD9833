@@ -82,6 +82,7 @@ void runLoop()
         char ST[]="   ";
         ST[0]='A'+top.getIndex();
         ST[1]='0'+dbg++;
+        //display->displayWaveForme(24,24,2);//top.getIndex());
         display->displayStatus(ST);
     }
     

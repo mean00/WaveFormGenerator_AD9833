@@ -5,6 +5,7 @@
  */
  WavRotary::WavRotary(int pinA,int pinB, int pinButton) : _rotary(pinA,pinB)
  {
+     
     _pushButton=pinButton;   
  }
  /**

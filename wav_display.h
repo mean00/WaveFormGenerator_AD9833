@@ -31,7 +31,7 @@ public:
     }
     void displayStatus      (const char *st);
     void update         (int waveForm, int hiDigit, int lowDigit, float fq);
-
+    void displayWaveForme(int x,int y,int waveForme);
 protected:
     U8GLIB_SSD1306_128X64 u8g;
   

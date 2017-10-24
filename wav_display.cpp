@@ -46,9 +46,46 @@ void WavDisplay::displayStatus(const char *st)
   u8g.firstPage();  
   do
   {
-    u8g.drawStr(16, 52, st);
-  }
+    u8g.drawStr(64, 52, st);
+    displayWaveForme(0,24,2);
+  }  
   while(u8g.nextPage());  
 }
+
+static const  int sinus[]={0,6,12,16,20,23,24,23,20,16,11,6,0,-6,-12,-16,-20,-23,-24,-23,-20,-16,-11,-6};
+
+/**
+ * \fn displayWaveForme
+ */
+void WavDisplay::displayWaveForme(int x,int y,int waveForme)
+{
+    
+#define WIDTH  24    
+#define HEIGHT 24
+    u8g.setColorIndex(1);
+    switch(waveForme)
+    {
+        case 0 :  //sine
+            for(int i=0;i<WIDTH;i++)
+                u8g.drawPixel(x+i,y+sinus[i]+HEIGHT/2);
+            break;
+        case 2 :  //square
+            u8g.drawHLine(x+0,y+0,WIDTH/2);
+            u8g.drawVLine(x+WIDTH/2,y,WIDTH);
+            u8g.drawHLine(x+WIDTH/2,y+WIDTH,WIDTH/2);
+            break;
+        case 1 :  // Triangle
+            u8g.drawLine(x+0,y+WIDTH,x+WIDTH/2,y);
+            u8g.drawLine(x+WIDTH/2,y,x+WIDTH,y+WIDTH);
+            
+            break;
+    default:
+        break;
+    }
+    
+    
+    
+}
+
 // EOF
 
