@@ -38,7 +38,7 @@
  }
 /**
  */
- void    WavGenerator::SetWaveForm(WavWave wave)
+ void    WavGenerator::setWaveForm(WavWave wave)
  {
      WaveformType waveType;
      switch(wave)
@@ -59,7 +59,7 @@
  }
  /**
   */
-void    WavGenerator::SetFrequency(float fq)
+void    WavGenerator::setFrequency(float fq)
 {
     _gen.SetFrequency(REG1,fq);
 }

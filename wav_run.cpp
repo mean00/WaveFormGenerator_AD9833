@@ -87,6 +87,10 @@ public:
         _parent=NULL;
         _max=mx;
     }
+    void setValue(int v)
+    {
+        index=v;
+    }
     virtual void turnLeft()
     {
         index=(index+_max-1)%_max;
@@ -113,9 +117,9 @@ TopAction   top;
 DigitAction waveForm(3);
 DigitAction hiDigit(10);
 DigitAction loDigit(10);
-DigitAction scaleDigit(5);
+DigitAction scaleDigit(7);
 
-
+static void updateScreenAndGen(void);
 /**
  * 
  */
@@ -125,19 +129,66 @@ void initLoop()
     top.addAction(&hiDigit);
     top.addAction(&loDigit);
     top.addAction(&scaleDigit); 
+    hiDigit.setValue(1);
+    loDigit.setValue(0);
+    scaleDigit.setValue(3); // 1khz default value
+    updateScreenAndGen();
 }
 /**
  * 
  */
+static const char *unit[3]={"Hz","kHz","MHz"};
+
+void updateScreenAndGen()
+{
+      char buffer[16];
+        float finalFq;
+        // compute the fq
+        int range=scaleDigit.getIndex();
+        int mul=range%3,mul2=mul;
+        
+        int fq=hiDigit.getIndex()*10+loDigit.getIndex();
+        finalFq=fq;
+        for(int i=0;i<range;i++)
+            finalFq*=10.;
+        finalFq/=10.;
+
+        gen->setWaveForm((WavWave)waveForm.getIndex());
+        gen->setFrequency(finalFq);
+        
+        
+        range=range/3;        
+        
+
+        
+        if(mul)
+        {
+            while(--mul) fq=fq*10;
+        }
+        
+        if(mul2)
+        {
+            sprintf(buffer,"%3d%s",fq,unit[range]);
+        }else
+            sprintf(buffer,"%1d.%1d%s",hiDigit.getIndex(),loDigit.getIndex(),unit[range]);
+            
+        
+        
+        display->startRefresh();        
+        // 0 24
+        display->draw(top.getIndex(),top.getSelection()+1,waveForm.getIndex(),hiDigit.getIndex(),loDigit.getIndex(),scaleDigit.getIndex(),buffer);
+        display->endRefresh();
+}
+
 void runLoop()
 {
     
-    bool redraw=true;
+    bool changed=true;
     Action *currentWidget=top.getCurrent();
     switch(rotary->getSense())
     {
         default:
-            redraw=false;
+            changed=false;
             break;
         case WavLeft:
             currentWidget->turnLeft();
@@ -149,16 +200,13 @@ void runLoop()
     if(rotary->getPushButtonStatus())
     {
         currentWidget->shortPress();
-        redraw=true;
+        changed=true;
     }
-    if(redraw)
+    if(changed)
     {
-        display->startRefresh();        
-        // 0 24
-        display->draw(top.getIndex(),top.getSelection()+1,waveForm.getIndex(),hiDigit.getIndex(),loDigit.getIndex(),scaleDigit.getIndex());
-        display->endRefresh();
+        updateScreenAndGen();
     }
-   // delay(100); // wait 100ms
+    delay(5); // wait 
 }
 
 

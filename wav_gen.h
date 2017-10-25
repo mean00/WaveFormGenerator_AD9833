@@ -14,8 +14,8 @@ class WavGenerator
 {
 public:
                     WavGenerator(int csPin);
-            void    SetWaveForm(WavWave wave);
-            void    SetFrequency(float fq);
+            void    setWaveForm(WavWave wave);
+            void    setFrequency(float fq);
 
   
 protected:  

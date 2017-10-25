@@ -27,7 +27,7 @@ static int getPercentFromVoltage(int mv);
     u8g.firstPage();  
     do
     {        
-      u8g.drawStr(0, 32, "WaveForm");
+      u8g.drawStr(0, 32, "Generator");
     }
     while(u8g.nextPage());  
 }
@@ -85,7 +85,7 @@ void WavDisplay::drawDigit(int column, int value)
  * @param lodigit
  * @param scaledigit
  */
-void WavDisplay::draw(int topIndex, int topSelection, int waveform, int hidigit, int lodigit, int scaledigit)
+void WavDisplay::draw(int topIndex, int topSelection, int waveform, int hidigit, int lodigit, int scaledigit,const char *dis)
 {
     u8g.setColorIndex(1);
     u8g.firstPage(); 
@@ -94,6 +94,7 @@ void WavDisplay::draw(int topIndex, int topSelection, int waveform, int hidigit,
     
     do
     {
+        u8g.setFont(u8g_font_ncenB24);
         drawDigit(28,hidigit);
         drawDigit(28*2,lodigit);
         drawDigit(28*3,scaledigit);
@@ -105,6 +106,9 @@ void WavDisplay::draw(int topIndex, int topSelection, int waveform, int hidigit,
                 u8g.drawHLine(0+topIndex*28,60,28);
                 u8g.drawHLine(0+topIndex*28,61,28);
         }
+        //u8g.setFont(u8g_font_7x13B);
+        u8g.setFont(u8g2_font_inb16_mf);
+        u8g.drawStr(24+4,48+4,dis);
     }
     while(u8g.nextPage());
 }

@@ -31,7 +31,7 @@
          _count++;
      else
          _count=0;
-     if(_count>3) return true;
+     if(_count>4) return true;
      return false;
  }
 
