@@ -1,6 +1,9 @@
 
 #include "Rotary.h"
 #include "wav_rotary.h"
+
+
+
 /**
  */
  WavRotary::WavRotary(int pinA,int pinB, int pinButton) : _rotary(pinA,pinB)
@@ -8,12 +11,14 @@
      
     _pushButton=pinButton;   
     pinMode(_pushButton, INPUT_PULLUP);     
-    _count=0;
+    _bounce.attach(_pushButton);
+    _bounce.interval(150);
  }
  /**
   */
  WavDirection WavRotary::getSense()
  {
+     _bounce.update();
      switch(_rotary.process())
      {
         case DIR_CW:   return WavLeft;break;
@@ -26,13 +31,7 @@
   */
  bool         WavRotary::getPushButtonStatus()
  {
-     bool s=  digitalRead(_pushButton); // very simple debounce
-     if(!s)
-         _count++;
-     else
-         _count=0;
-     if(_count>4) return true;
-     return false;
+     return !_bounce.read();
  }
 
  // EOF

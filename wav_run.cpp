@@ -205,8 +205,7 @@ void runLoop()
     if(changed)
     {
         updateScreenAndGen();
-    }
-    delay(5); // wait 
+    }    
 }
 
 

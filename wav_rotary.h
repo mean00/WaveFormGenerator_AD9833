@@ -1,5 +1,6 @@
 
 #pragma once
+#include "Bounce2.h"
 /**
  */
 enum WavDirection
@@ -19,5 +20,5 @@ public:
 protected:
         Rotary       _rotary;
         int          _pushButton;
-        int          _count;
+        Bounce       _bounce;
 };

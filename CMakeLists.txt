@@ -52,6 +52,7 @@ generate_arduino_firmware(wavform_generator
                 LIBS ${libPrefix}Wire
                 LIBS ${libPrefix}SPI
                 LIBS ${libPrefix}U8g2lib
+                LIBS ${libPrefix}Bounce2
                 LIBS ${libPrefix}Rotary
                 PORT ${ARDUINO_DEFAULT_PORT}
                 )
