@@ -53,18 +53,18 @@ void setup()
     Serial.println("*Start*");
     display=new WavDisplay;
     rotary= new WavRotary(1,2,3);
-    gen=    new WavGenerator(4);
-    Serial.println("*Init done*");
+    gen=    new WavGenerator(4);;
     display->displayStatus("Go");
+    Serial.println("*Setup done*");
 }
 /**
  * 
  */
 void loop() 
 { 
-    runLoop();
-   
-    
+    runLoop();       
 }
+
+// EOF
 
 

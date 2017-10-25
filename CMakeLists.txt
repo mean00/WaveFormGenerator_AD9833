@@ -29,8 +29,8 @@ SET(CUSTOM_LIB_DIR /home/fx/Arduino/libraries)
 link_directories( ${CUSTOM_LIB_DIR})
 
 # u8glib is complicated and needs special care
-link_directories(${CUSTOM_LIB_DIR}/U8glib)
-set(U8glib_RECURSE True)
+link_directories(${CUSTOM_LIB_DIR}/U8g2)
+set(U8g2lib_RECURSE True)
 #
 # Be careful with the includes in the ino files
 # #include <foo.h> // this is a comment
@@ -45,10 +45,10 @@ generate_arduino_firmware(ampmeter
                 SKETCH .              # Folder to get the .ino from, must follow DIR_NAME/DIR_NAME.ino patten !
                ## SRCS  ampmeter.ino amp_display.cpp
                 LIBS ${libPrefix}AD9833
-                LIBS ${libPrefix}Wire 
-                LIBS ${libPrefix}SPI 
-                LIBS ${libPrefix}U8glib 
-                LIBS ${libPrefix}Rotary 
+                LIBS ${libPrefix}Wire
+                LIBS ${libPrefix}SPI
+                LIBS ${libPrefix}U8g2
+                LIBS ${libPrefix}Rotary
                 PORT ${ARDUINO_DEFAULT_PORT}
                 )
 

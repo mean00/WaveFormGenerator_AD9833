@@ -2,7 +2,7 @@
  
  */
 #pragma once
-#include <U8glib.h>
+#include <U8g2lib.h>
 
 /**
  * 
@@ -29,11 +29,13 @@ public:
     {
       
     }
+    void startRefresh();
     void displayStatus      (const char *st);
     void update         (int waveForm, int hiDigit, int lowDigit, float fq);
     void displayWaveForme(int x,int y,int waveForme);
+    void endRefresh();
 protected:
-    U8GLIB_SSD1306_128X64 u8g;
+    U8G2_SSD1306_128X64_NONAME_1_4W_HW_SPI u8g;
   
 };
 

@@ -18,14 +18,14 @@ static int getPercentFromVoltage(int mv);
  *   Reset=Pin 10
 */
 //
- WavDisplay::WavDisplay() :   u8g(8,9,10) // cs a0 rst
-{
-    //https://github.com/olikraus/u8glib/wiki/fontsize
+ WavDisplay::WavDisplay() :   u8g(U8G2_R0,8,9,10) // cs a0 rst  *rotation, uint8_t cs, uint8_t dc, uint8_t reset
+{    
+    u8g.begin();
+    u8g.setFont(u8g_font_7x13B);
     u8g.firstPage();  
     do
-    {    
-    u8g.setFont(u8g_font_7x13B);
-    u8g.drawStr(0, 32, "WaveForm");
+    {        
+      u8g.drawStr(0, 32, "WaveForm");
     }
     while(u8g.nextPage());  
 }
@@ -43,16 +43,24 @@ static int getPercentFromVoltage(int mv);
  */
 void WavDisplay::displayStatus(const char *st)
 {
-  u8g.firstPage();  
-  do
-  {
+ 
     u8g.drawStr(64, 52, st);
-    displayWaveForme(0,24,2);
-  }  
-  while(u8g.nextPage());  
+}
+
+/**
+ */
+void WavDisplay::startRefresh()
+{
+      
+}
+void WavDisplay::endRefresh()
+{
+   
 }
 
 static const  int sinus[]={0,6,12,16,20,23,24,23,20,16,11,6,0,-6,-12,-16,-20,-23,-24,-23,-20,-16,-11,-6};
+
+
 
 /**
  * \fn displayWaveForme
@@ -62,6 +70,9 @@ void WavDisplay::displayWaveForme(int x,int y,int waveForme)
     
 #define WIDTH  24    
 #define HEIGHT 24
+    u8g.firstPage(); 
+    do
+    {
     u8g.setColorIndex(1);
     switch(waveForme)
     {
@@ -82,7 +93,8 @@ void WavDisplay::displayWaveForme(int x,int y,int waveForme)
     default:
         break;
     }
-    
+    }
+    while(u8g.nextPage());
     
     
 }

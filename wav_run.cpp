@@ -64,6 +64,7 @@ void runLoop()
 {
     static int dbg=0;
     bool redraw=true;
+  
     switch(rotary->getSense())
     {
         default:
@@ -79,13 +80,10 @@ void runLoop()
     }
     if(redraw)
     {
-        char ST[]="   ";
-        ST[0]='A'+top.getIndex();
-        ST[1]='0'+dbg++;
-        //display->displayWaveForme(24,24,2);//top.getIndex());
-        display->displayStatus(ST);
+        display->startRefresh();
+        display->displayWaveForme(0,24,top.getIndex());
+        display->endRefresh();
     }
-    
 }
 
 
