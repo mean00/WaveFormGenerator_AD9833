@@ -21,7 +21,9 @@ static int getPercentFromVoltage(int mv);
  WavDisplay::WavDisplay() :   u8g(U8G2_R0,8,9,10) // cs a0 rst  *rotation, uint8_t cs, uint8_t dc, uint8_t reset
 {    
     u8g.begin();
-    u8g.setFont(u8g_font_7x13B);
+    //u8g.setFont(u8g_font_7x13B);
+    u8g.setFont(u8g_font_ncenB24);
+    
     u8g.firstPage();  
     do
     {        
@@ -71,7 +73,7 @@ void WavDisplay::drawDigit(int column, int value)
 {
     char p[2]={0,0};    
     p[0]='0'+value;
-    u8g.drawStr(column,24,p);
+    u8g.drawStr(column+4,24+4,p);
     
 }
 /**
@@ -92,10 +94,10 @@ void WavDisplay::draw(int topIndex, int topSelection, int waveform, int hidigit,
     
     do
     {
-        drawDigit(28+28,hidigit);
-        drawDigit(28+28*2,lodigit);
-        drawDigit(28+28*3,scaledigit);
-        displayWaveForme(0,24,waveform);
+        drawDigit(28,hidigit);
+        drawDigit(28*2,lodigit);
+        drawDigit(28*3,scaledigit);
+        displayWaveForme(2,24,waveform);
         u8g.drawHLine(0+topIndex*28,0,28);
         u8g.drawHLine(0+topIndex*28,1,28);
         if(topSelection)

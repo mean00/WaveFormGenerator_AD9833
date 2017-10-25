@@ -10,17 +10,6 @@ extern WavDisplay      *display;
 extern WavRotary       *rotary;
 extern WavGenerator    *gen;
 
-
-enum GuiState
-{
-    guiTop,
-    guiForm,
-    guiTopDigit,
-    guiBottomDigit
-};
-
-GuiState state=guiTop;
-
 #define MAX 3
 /**
  */
@@ -41,7 +30,7 @@ public:
     {
         index=0;
         max=0;
-        selection-1;
+        selection=-1;
     }
     virtual void turnLeft()
     {
@@ -67,7 +56,8 @@ public:
     }
     Action *getCurrent()
     {
-        if(selection==-1) return this;
+        if(selection==-1) 
+            return this;
         return actions[selection];
     }
     int  getSelection()
@@ -141,7 +131,7 @@ void initLoop()
  */
 void runLoop()
 {
-    static int dbg=0;
+    
     bool redraw=true;
     Action *currentWidget=top.getCurrent();
     switch(rotary->getSense())
@@ -168,7 +158,7 @@ void runLoop()
         display->draw(top.getIndex(),top.getSelection()+1,waveForm.getIndex(),hiDigit.getIndex(),loDigit.getIndex(),scaleDigit.getIndex());
         display->endRefresh();
     }
-    delay(100); // wait 100ms
+   // delay(100); // wait 100ms
 }
 
 
