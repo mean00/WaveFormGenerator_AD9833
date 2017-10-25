@@ -26,10 +26,14 @@
  * https://www.allaboutcircuits.com/projects/how-to-use-a-rotary-encoder-in-a-mcu-based-project/
  * https://github.com/brianlow/Rotary
  */
-
+// Need to include these here, so that cmake finds them
 #include <SPI.h>
+#include <Wire.h>
 #include <AD9833.h>
 #include <Rotary.h>
+#include <U8g2lib.h>
+//
+
 #include "wav_display.h"
 #include "wav_rotary.h"
 #include "wav_gen.h"
@@ -55,6 +59,7 @@ void setup()
     rotary= new WavRotary(1,2,3);
     gen=    new WavGenerator(4);;
     display->displayStatus("Go");
+    initLoop();
     Serial.println("*Setup done*");
 }
 /**

@@ -19,4 +19,5 @@ public:
 protected:
         Rotary       _rotary;
         int          _pushButton;
+        int          _count;
 };

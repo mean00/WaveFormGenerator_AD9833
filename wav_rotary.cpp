@@ -7,6 +7,8 @@
  {
      
     _pushButton=pinButton;   
+    pinMode(_pushButton, INPUT);     
+    _count=0;
  }
  /**
   */
@@ -22,6 +24,12 @@
  }
  bool         WavRotary::getPushButtonStatus()
  {
+     bool s=  digitalRead(_pushButton); // very simple debounce
+     if(!s)
+         _count++;
+     else
+         _count=0;
+     if(_count>3) return true;
      return false;
  }
 

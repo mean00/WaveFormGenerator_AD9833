@@ -57,10 +57,59 @@ void WavDisplay::endRefresh()
 {
    
 }
+/**
+ * 
+ * @param topIndex
+ * @param topSelection
+ * @param waveform
+ * @param hidigit
+ * @param lodigit
+ * @param scaledigit
+ */
+
+void WavDisplay::drawDigit(int column, int value)
+{
+    char p[2]={0,0};    
+    p[0]='0'+value;
+    u8g.drawStr(column,24,p);
+    
+}
+/**
+ * 
+ * @param topIndex
+ * @param topSelection
+ * @param waveform
+ * @param hidigit
+ * @param lodigit
+ * @param scaledigit
+ */
+void WavDisplay::draw(int topIndex, int topSelection, int waveform, int hidigit, int lodigit, int scaledigit)
+{
+    u8g.setColorIndex(1);
+    u8g.firstPage(); 
+    
+    float fq=(hidigit*10+lodigit); // 00--99
+    
+    do
+    {
+        drawDigit(28+28,hidigit);
+        drawDigit(28+28*2,lodigit);
+        drawDigit(28+28*3,scaledigit);
+        displayWaveForme(0,24,waveform);
+        u8g.drawHLine(0+topIndex*28,0,28);
+        u8g.drawHLine(0+topIndex*28,1,28);
+        if(topSelection)
+        {
+                u8g.drawHLine(0+topIndex*28,60,28);
+                u8g.drawHLine(0+topIndex*28,61,28);
+        }
+    }
+    while(u8g.nextPage());
+}
 
 static const  int sinus[]={0,6,12,16,20,23,24,23,20,16,11,6,0,-6,-12,-16,-20,-23,-24,-23,-20,-16,-11,-6};
 
-
+    
 
 /**
  * \fn displayWaveForme
@@ -70,10 +119,9 @@ void WavDisplay::displayWaveForme(int x,int y,int waveForme)
     
 #define WIDTH  24    
 #define HEIGHT 24
-    u8g.firstPage(); 
-    do
-    {
-    u8g.setColorIndex(1);
+   
+    
+    
     switch(waveForme)
     {
         case 0 :  //sine
@@ -93,10 +141,7 @@ void WavDisplay::displayWaveForme(int x,int y,int waveForme)
     default:
         break;
     }
-    }
-    while(u8g.nextPage());
-    
-    
+   
 }
 
 // EOF
