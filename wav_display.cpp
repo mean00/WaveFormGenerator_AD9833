@@ -11,14 +11,15 @@ static int getPercentFromVoltage(int mv);
 // sck=13
 // oled
 /*
- *   D0=sck=Pin 13 
- *   D1=mosi=Pin 11 
- *   CS=Pin 8 
- *   DC=A0=Pin 9
- *   Reset=Pin 10
+ *   D0=sck= Pin 13  D13
+ *   D1=mosi=Pin 11  D11
+ *   CS=     Pin 8 
+ *   DC=A0=  Pin 9
+ *   Reset=  Pin 10
 */
 //
- WavDisplay::WavDisplay() :   u8g(U8G2_R0,8,9,10) // cs a0 rst  *rotation, uint8_t cs, uint8_t dc, uint8_t reset
+// u8g(U8G2_R0,8,9,10)
+ WavDisplay::WavDisplay(int cs, int ds, int rst) :   u8g(U8G2_R0,cs,ds,rst) // cs a0 rst  *rotation, uint8_t cs, uint8_t dc, uint8_t reset
 {    
     u8g.begin();
     //u8g.setFont(u8g_font_7x13B);

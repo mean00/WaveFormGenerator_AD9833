@@ -143,6 +143,7 @@ void updateScreenAndGen()
 {
       char buffer[16];
         float finalFq;
+//        return;
         // compute the fq
         int range=scaleDigit.getIndex();
         int mul=range%3,mul2=mul;

@@ -22,7 +22,7 @@ public:
      *   Reset=Pin 10
   */
   
-    WavDisplay();
+    WavDisplay(int cs, int ds, int rst);
     /**
      */
     ~WavDisplay()

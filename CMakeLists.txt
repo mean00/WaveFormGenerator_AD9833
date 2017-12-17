@@ -11,12 +11,14 @@ cmake_minimum_required(VERSION 2.8)
 project(ArduinoExample C CXX)
 #
 # FOR UNO
-set(ARDUINO_DEFAULT_BOARD uno)        # Default Board ID, when not specified
-set(ARDUINO_DEFAULT_PORT /dev/ttyACM0) # Default Port, when not specified
+#set(ARDUINO_DEFAULT_BOARD uno)        # Default Board ID, when not specified
+#set(ARDUINO_DEFAULT_PORT /dev/ttyACM0) # Default Port, when not specified
 #set(ARDUINO_CPU          atmega328)
-
+# FOR NANO
 # this is needed for the nano, it should be set automatically, maybe something changed with sdk 1.8.x ?
-#set(ARDUINO_CPUMENU .menu.cpu.${ARDUINO_CPU})
+set(ARDUINO_CPU          atmega328)
+set(ARDUINO_CPUMENU .menu.cpu.${ARDUINO_CPU})
+set(ARDUINO_DEFAULT_BOARD nano)        # Default Board ID, when not specified
 #
 print_board_list()
 print_programmer_list()

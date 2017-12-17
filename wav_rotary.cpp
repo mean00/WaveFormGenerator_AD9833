@@ -12,7 +12,7 @@
     _pushButton=pinButton;   
     pinMode(_pushButton, INPUT_PULLUP);     
     _bounce.attach(_pushButton);
-    _bounce.interval(150);
+    _bounce.interval(20);
  }
  /**
   */
