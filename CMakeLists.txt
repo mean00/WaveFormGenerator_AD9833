@@ -2,7 +2,7 @@
 # cmake arduino cloned from https://github.com/ncasaril/arduino-cmake.git     #
 #=============================================================================#
 set(CMAKE_TOOLCHAIN_FILE cmake/ArduinoToolchain.cmake) # Arduino Toolchain
-
+ADD_DEFINITIONS("-std=c++11") # For bounce2
 
 cmake_minimum_required(VERSION 2.8)
 #====================================================================#

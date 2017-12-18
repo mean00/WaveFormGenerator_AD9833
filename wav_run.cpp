@@ -2,6 +2,7 @@
  */
 #include <AD9833.h>
 #include <Rotary.h>
+#include "Bounce2.h"
 #include "wav_display.h"
 #include "wav_irotary.h"
 #include "wav_gen.h"
@@ -9,7 +10,7 @@
 extern WavDisplay      *display;
 extern WavRotary       *rotary;
 extern WavGenerator    *gen;
-
+extern Bounce          *pushButton;
 #define MAX 3
 /**
  */
@@ -138,60 +139,63 @@ void initLoop()
  * 
  */
 static const char *unit[3]={"Hz","kHz","MHz"};
-
+/**
+ */
 void updateScreenAndGen()
 {
-      char buffer[16];
-        float finalFq;
-//        return;
-        // compute the fq
-        int range=scaleDigit.getIndex();
-        int mul=range%3,mul2=mul;
-        
-        int fq=hiDigit.getIndex()*10+loDigit.getIndex();
-        finalFq=fq;
-        for(int i=0;i<range;i++)
-            finalFq*=10.;
-        finalFq/=10.;
+    char buffer[16];
+    float finalFq;
+    int range=scaleDigit.getIndex();
+    int mul=range%3,mul2=mul;        
+    int fq=hiDigit.getIndex()*10+loDigit.getIndex();
+    finalFq=fq;
+    for(int i=0;i<range;i++)
+        finalFq*=10.;
+    finalFq/=10.;
 
-        gen->setWaveForm((WavWave)waveForm.getIndex());
-        gen->setFrequency(finalFq);
-        
-        
-        range=range/3;        
-        
+    gen->setWaveForm((WavWave)waveForm.getIndex());
+    gen->setFrequency(finalFq);
 
-        
-        if(mul)
-        {
-            while(--mul) fq=fq*10;
-        }
-        
-        if(mul2)
-        {
-            sprintf(buffer,"%3d%s",fq,unit[range]);
-        }else
-            sprintf(buffer,"%1d.%1d%s",hiDigit.getIndex(),loDigit.getIndex(),unit[range]);
-            
-        
-        
-        display->startRefresh();        
-        // 0 24
-        display->draw(top.getIndex(),top.getSelection()+1,waveForm.getIndex(),hiDigit.getIndex(),loDigit.getIndex(),scaleDigit.getIndex(),buffer);
-        display->endRefresh();
+
+    range=range/3;        
+
+
+
+    if(mul)
+    {
+        while(--mul) fq=fq*10;
+    }
+
+    if(mul2)
+    {
+        sprintf(buffer,"%3d%s",fq,unit[range]);
+    }else
+        sprintf(buffer,"%1d.%1d%s",hiDigit.getIndex(),loDigit.getIndex(),unit[range]);
+
+
+
+    display->startRefresh();        
+    // 0 24
+    display->draw(top.getIndex(),top.getSelection()+1,waveForm.getIndex(),hiDigit.getIndex(),loDigit.getIndex(),scaleDigit.getIndex(),buffer);
+    display->endRefresh();
 }
-
+/**
+ */
 void runLoop()
 {
     
     bool changed=true;
+    bool pushed=false;
+    
+#define CHECK_PUSH() {if(!pushed)     pushed|=pushButton->update();}
+    
+    CHECK_PUSH();
     int sense=rotary->getCount();
     if(sense)
         changed=true;
     while(sense)
     {
         Action *currentWidget=top.getCurrent();
-        changed=false;
         if(sense>0)
         {
              currentWidget->turnLeft();
@@ -202,41 +206,22 @@ void runLoop()
             sense++;
             
         }
+        CHECK_PUSH();
     }
-#if 0    
-    if(rotary->getPushButtonStatus())
-    {
-        currentWidget->shortPress();
-        changed=true;
-    }
-#endif    
+    if(pushed)
+        if(pushButton->rose())
+        {
+            Action *currentWidget=top.getCurrent();
+            currentWidget->shortPress();
+            changed=true;
+        }
+    
+    
     if(changed)
     {
         updateScreenAndGen();
     }    
 }
 
-
-#if 0
-    static int signal=0;
-    switch(rotary->getSense())
-    {
-        default:
-            break;
-
-        case WavLeft:
-            Serial.println("Clockwise\n");
-            signal=(signal+2)%3;
-            gen->SetWaveForm((WavWave)signal);
-            display->displayStatus(">>");
-            break;
-        case WavRight:
-            Serial.println("CounterClockwise\n");
-            signal=(signal+1)%3;
-            gen->SetWaveForm((WavWave)signal);
-            display->displayStatus("<<");
-            break;
-    }
-#endif    
-
+// eof
 
