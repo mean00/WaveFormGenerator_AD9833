@@ -37,8 +37,8 @@ ISR(PCINT2_vect)
  {
      switch(_rotary.process())
      {
-        case DIR_CCW:   _count++;break;
-        case DIR_CW:  _count--;break;
+        case DIR_CCW:  _count++;break;
+        case DIR_CW:   _count--;break;
         default:       break;
      }
  }

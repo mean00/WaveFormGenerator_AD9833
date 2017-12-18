@@ -182,14 +182,10 @@ void updateScreenAndGen()
 /**
  */
 void runLoop()
-{
+{    
+    bool changed=false;
     
-    bool changed=true;
-    bool pushed=false;
     
-#define CHECK_PUSH() {if(!pushed)     pushed|=pushButton->update();}
-    
-    CHECK_PUSH();
     int sense=rotary->getCount();
     if(sense)
         changed=true;
@@ -198,29 +194,26 @@ void runLoop()
         Action *currentWidget=top.getCurrent();
         if(sense>0)
         {
-             currentWidget->turnLeft();
-             sense--;
+            currentWidget->turnLeft();
+            sense--;
         }else
         {
             currentWidget->turnRight();
-            sense++;
-            
+            sense++;            
         }
-        CHECK_PUSH();
     }
-    if(pushed)
-        if(pushButton->rose())
-        {
-            Action *currentWidget=top.getCurrent();
-            currentWidget->shortPress();
-            changed=true;
-        }
-    
-    
     if(changed)
     {
         updateScreenAndGen();
+        changed=false;
     }    
+    if(pushButton->update())
+        if(!pushButton->read())
+        {
+            Action *currentWidget=top.getCurrent();
+            currentWidget->shortPress();
+            updateScreenAndGen();
+        }
 }
 
 // eof
