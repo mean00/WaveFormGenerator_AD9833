@@ -6,11 +6,11 @@
 #include "wav_display.h"
 #include "wav_irotary.h"
 #include "wav_gen.h"
-
+#include "wav_pushButton.h"
 extern WavDisplay      *display;
 extern WavRotary       *rotary;
 extern WavGenerator    *gen;
-extern Bounce          *pushButton;
+extern WavPushButton   *pushButton;
 #define MAX 3
 /**
  */
@@ -180,6 +180,7 @@ void updateScreenAndGen()
     display->endRefresh();
 }
 /**
+ * https://sites.google.com/site/qeewiki/books/avr-guide/external-interrupts-on-the-atmega328
  */
 void runLoop()
 {    
@@ -207,13 +208,13 @@ void runLoop()
         updateScreenAndGen();
         changed=false;
     }    
-    if(pushButton->update())
-        if(!pushButton->read())
-        {
-            Action *currentWidget=top.getCurrent();
-            currentWidget->shortPress();
-            updateScreenAndGen();
-        }
+    pushButton->run();
+    if(pushButton->pressed())
+    {
+        Action *currentWidget=top.getCurrent();
+        currentWidget->shortPress();
+        updateScreenAndGen();
+    }
 }
 
 // eof

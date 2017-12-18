@@ -33,8 +33,9 @@
 #include <Rotary.h>
 #include <U8g2lib.h>
 #include "Bounce2.h"
-//
 
+//
+#include "wav_pushButton.h"
 #include "wav_display.h"
 #include "wav_irotary.h"
 #include "wav_gen.h"
@@ -46,7 +47,7 @@ extern void runLoop(void);
 WavDisplay      *display;
 WavRotary       *rotary;
 WavGenerator    *gen;
-Bounce          *pushButton;
+WavPushButton   *pushButton;
 
 
 /**
@@ -58,7 +59,7 @@ void setup()
     Serial.println("*Start*");
     display=   new WavDisplay(8,9,10); // +11 & 13 for hw SPI
     rotary=    new WavRotary(2,3); //
-    pushButton=new Bounce(4,40); // rotary push button
+    pushButton=new WavPushButton(4,40); // rotary push button
     gen=       new WavGenerator(5);;   // +11 /13 for hw spi        
     display->displayStatus("Go");
     initLoop();
