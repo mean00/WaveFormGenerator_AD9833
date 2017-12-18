@@ -3,7 +3,7 @@
 #include <AD9833.h>
 #include <Rotary.h>
 #include "wav_display.h"
-#include "wav_rotary.h"
+#include "wav_irotary.h"
 #include "wav_gen.h"
 
 extern WavDisplay      *display;
@@ -185,24 +185,31 @@ void runLoop()
 {
     
     bool changed=true;
-    Action *currentWidget=top.getCurrent();
-    switch(rotary->getSense())
+    int sense=rotary->getCount();
+    if(sense)
+        changed=true;
+    while(sense)
     {
-        default:
-            changed=false;
-            break;
-        case WavLeft:
-            currentWidget->turnLeft();
-            break;
-        case WavRight:
+        Action *currentWidget=top.getCurrent();
+        changed=false;
+        if(sense>0)
+        {
+             currentWidget->turnLeft();
+             sense--;
+        }else
+        {
             currentWidget->turnRight();
-            break;
+            sense++;
+            
+        }
     }
+#if 0    
     if(rotary->getPushButtonStatus())
     {
         currentWidget->shortPress();
         changed=true;
     }
+#endif    
     if(changed)
     {
         updateScreenAndGen();
