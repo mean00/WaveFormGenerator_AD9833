@@ -56,7 +56,7 @@ void setup()
     Serial.begin(57600);
     Serial.println("*Start*");
     display=new WavDisplay(8,9,10); // +11 & 13 for hw SPI
-    rotary= new WavRotary(1,2,3);
+    rotary= new WavRotary(3,2,4);
     gen=    new WavGenerator(5);;   // +11 /13 for hw spi
 //    gen->setWaveForm(WavTriangle);
 //    gen->setFrequency(1000);
