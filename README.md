@@ -1,5 +1,5 @@
 # WaveFormGenerator_AD9833
-Simple waveform generator, using AD9833 + rotarty encoder + SSD1306 oled screen
+Simple waveform generator, using AD9833 + rotary encoder + SSD1306 oled screen
 You can build this project using either the arduino IDE or cmake-arduino (included).
 In case of the latter, you'll probably need to tune the CMakeLists.txt
 
