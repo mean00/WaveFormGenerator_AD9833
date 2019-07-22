@@ -1,10 +1,16 @@
 # WaveFormGenerator_AD9833
-Simple waveform generator, using AD9833 + rotary encoder + SSD1306 oled screen
-You can build this project using either the arduino IDE or cmake-arduino (included).
-In case of the latter, you'll probably need to tune the CMakeLists.txt
+Simple waveform generator, using AD9833 + rotary encoder + SSD1306 oled screen.
+It can output triangle/sinusoidal/rectangular waveforms.
 
-You'll also need the following dependencies :
-* u8g2 (install it from arduino IDE)
-* Bounce2 (install it from arduino IDE)
-* Rotary encoder brilliant lib : https://github.com/brianlow/Rotary
-* AD9833 lib Dhttps://github.com/Billwilliams1952/AD9833-Library-Arduino
+That project is using arduino-cmake-stm32 (that works for both AVR and STM32 build)
+All the dependencies are pulles as git submodules
+
+build instruction  & flash using usbasp:
+* mkdir build
+* cd build && cmake ..
+* make
+* bash ../flash.sh
+
+![screenshot](schematics/pic.jpg?raw=true "front")
+
+
