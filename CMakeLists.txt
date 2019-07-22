@@ -157,7 +157,8 @@ set(U8g2_RECURSE True)
 
 generate_arduino_firmware(wavform_generator 
                 SKETCH .              # Folder to get the .ino from, must follow DIR_NAME/DIR_NAME.ino patten !
-                SRCS wav_display.cpp  wav_gen.cpp  wav_irotary.cpp  wav_pushButton.cpp  wav_rotary.cpp  wav_run.cpp
+                SRCS wav_display.cpp  wav_gen.cpp  wav_irotary.cpp  wav_pushButton.cpp  wav_run.cpp
+#wav_rotary.cpp  
                 LIBS ${libPrefix}AD9833
                 LIBS ${libPrefix}Wire
                 LIBS ${libPrefix}SPI

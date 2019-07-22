@@ -12,6 +12,7 @@ static WavRotary *current=NULL;
     _count=0;
     PCICR |= (1 << PCIE2);
     PCMSK2 |= (1 << pinA) | (1 << pinB); // only works for up to 7!
+    _rotary.begin(true);
     interrupts();
  }
  int          WavRotary::getCount()

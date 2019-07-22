@@ -9,10 +9,10 @@
  WavRotary::WavRotary(int pinA,int pinB, int pinButton) : _rotary(pinA,pinB)
  {
      
-    _pushButton=pinButton;   
-    pinMode(_pushButton, INPUT_PULLUP);     
+    _pushButton=pinButton;       
     _bounce.attach(_pushButton);
     _bounce.interval(20);
+    _rotary.begin(true);
  }
  /**
   */
