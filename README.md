@@ -13,5 +13,5 @@ build instruction  & flash using usbasp:
 * bash ../flash.sh
 
 ![screenshot](schematics/pic.jpg?raw=true "front")
-
+![screenshot](schematics/schematic.png?raw=true "schem")
 
