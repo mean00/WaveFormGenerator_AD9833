@@ -126,6 +126,9 @@ static void updateScreenAndGen(void);
  */
 void initLoop()
 {   
+    // Set amp control as output
+    pinMode(6,OUTPUT);
+    digitalWrite(6, LOW);
     top.addAction(&waveForm);
     top.addAction(&hiDigit);
     top.addAction(&loDigit);

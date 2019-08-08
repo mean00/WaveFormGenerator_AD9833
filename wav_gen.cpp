@@ -53,6 +53,7 @@
          waveType = SQUARE_WAVE;
          break;
     }
+    digitalWrite(6, waveType==SQUARE_WAVE); // disable amplification for square
     _gen.SetWaveform(REG1,waveType);   // Next waveform
     _gen.SetWaveform(REG0,waveType);
     _gen.SetOutputSource(REG1);        // 
