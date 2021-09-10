@@ -1,16 +1,9 @@
+
+#include "lnArduino.h"
+#include "RotaryEncoder.h"
+#include "wav_run.h"
 /**
  */
-#include <AD9833.h>
-#include <Rotary.h>
-#include "Bounce2.h"
-#include "wav_display.h"
-#include "wav_irotary.h"
-#include "wav_gen.h"
-#include "wav_pushButton.h"
-extern WavDisplay      *display;
-extern WavRotary       *rotary;
-extern WavGenerator    *gen;
-extern WavPushButton   *pushButton;
 #define MAX 3
 /**
  */
@@ -126,98 +119,73 @@ static void updateScreenAndGen(void);
  */
 void initLoop()
 {   
-    // Set amp control as output
-    pinMode(6,OUTPUT);
-    digitalWrite(6, LOW);
     top.addAction(&waveForm);
     top.addAction(&hiDigit);
     top.addAction(&loDigit);
     top.addAction(&scaleDigit); 
     hiDigit.setValue(1);
     loDigit.setValue(0);
-    scaleDigit.setValue(3); // 1khz default value
-    updateScreenAndGen();
+    scaleDigit.setValue(3); // 1khz default value    
 }
 /**
  * 
+ * @return 
  */
-static const char *unit[3]={"Hz","kHz","MHz"};
-/**
- */
-void updateScreenAndGen()
+int  getFrequency()
 {
-    char buffer[16];
-    float finalFq;
-    int range=scaleDigit.getIndex();
-    int mul=range%3,mul2=mul;        
-    int fq=hiDigit.getIndex()*10+loDigit.getIndex();
-    finalFq=fq;
-    for(int i=0;i<range;i++)
-        finalFq*=10.;
-    finalFq/=10.;
-
-    gen->setWaveForm((WavWave)waveForm.getIndex());
-    gen->setFrequency(finalFq);
-
-
-    range=range/3;        
-
-
-
-    if(mul)
+    int fq=(hiDigit.getIndex()*10+loDigit.getIndex());
+    int s=scaleDigit.getIndex();
+    for(int i=0;i<s;i++)
     {
-        while(--mul) fq=fq*10;
+        fq*=10;
     }
+    fq/=10;
+    if(!fq) fq=1;
+    return fq;
+}
 
-    if(mul2)
-    {
-        sprintf(buffer,"%3d%s",fq,unit[range]);
-    }else
-        sprintf(buffer,"%1d.%1d%s",hiDigit.getIndex(),loDigit.getIndex(),unit[range]);
-
-
-
-    display->startRefresh();        
-    // 0 24
-    display->draw(top.getIndex(),top.getSelection()+1,waveForm.getIndex(),hiDigit.getIndex(),loDigit.getIndex(),scaleDigit.getIndex(),buffer);
-    display->endRefresh();
+/**
+ * 
+ * @return 
+ */
+extern WaveForm  getWaveForm()
+{
+    return (WaveForm)waveForm.getIndex();
 }
 /**
- * https://sites.google.com/site/qeewiki/books/avr-guide/external-interrupts-on-the-atmega328
+ * 
+ * @param event
  */
-void runLoop()
+bool runLoop(  lnRotary::EVENTS  event,int count)
 {    
-    bool changed=false;
+    bool dirty=false;
     
+    if(event==lnRotary::EVENT_NONE) return false;
     
-    int sense=rotary->getCount();
-    if(sense)
-        changed=true;
-    while(sense)
+    if(event & lnRotary::ROTARY_CHANGE)
     {
-        Action *currentWidget=top.getCurrent();
-        if(sense>0)
+        dirty=true;
+        while(count)
         {
-            currentWidget->turnLeft();
-            sense--;
-        }else
-        {
-            currentWidget->turnRight();
-            sense++;            
+            Action *currentWidget=top.getCurrent();
+            if(count>0)
+            {
+                currentWidget->turnLeft();
+                count--;
+            }else
+            {
+                currentWidget->turnRight();
+                count++;            
+            }
         }
     }
-    if(changed)
+    if(event & lnRotary::SHORT_PRESS)
     {
-        updateScreenAndGen();
-        changed=false;
-    }    
-    pushButton->run();
-    if(pushButton->pressed())
-    {
-        Action *currentWidget=top.getCurrent();
-        currentWidget->shortPress();
-        updateScreenAndGen();
+            Action *currentWidget=top.getCurrent();
+            currentWidget->shortPress();
+            dirty=true;
     }
+    return dirty;
 }
 
 // eof

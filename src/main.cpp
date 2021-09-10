@@ -12,7 +12,7 @@
 #include "FreeSans7pt7b.h"
 
 #include "wavePinout.h"
-
+#include "wav_run.h"
 simplerAD9833 *ad;
 OLED_lnGd32 *ssd1306;
 lnRotary *rotary;
@@ -48,8 +48,15 @@ void setup()
 
     // rotary
     rotary=new lnRotary(ROTARY_PUSH,ROTARY_LEFT,ROTARY_RIGHT);    
+    initLoop();
 }
-
+/**
+ * 
+ */
+void redraw()
+{
+    
+}
 
 void loop()
 {
@@ -57,10 +64,9 @@ void loop()
     int onoff=0;
     //
     ssd1306->clrScr();
-    ssd1306->square(100,20,30,30,true);
-    ssd1306->print(2,40,"Demo");
     ssd1306->update();
 
+    
     // use safe default
     ad->setFrequency(10*1000);
     ad->setWaveForm(simplerAD9833::Sine);
@@ -68,13 +74,19 @@ void loop()
     ad->enable();
     
     rotary->start();
-    
+    redraw();
     while(1)
     {
-            amp(true);
-            xDelay(2000);
-            amp(false);
-            xDelay(2000);
+       lnRotary::EVENTS  event=rotary->waitForEvent(1000);
+       int count=rotary->getCount();
+       if(event)
+       {
+            if(runLoop(event,count))
+            {
+                redraw();
+            }
+       }
     }
+   
 }
 // EOF
