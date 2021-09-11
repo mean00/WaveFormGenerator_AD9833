@@ -10,17 +10,20 @@
 class Action
 {
 public:
+                 Action(Selection s) {_selection=s;}
     virtual void turnLeft()=0;
     virtual void turnRight()=0;
     virtual void shortPress()=0;
     virtual void setParent(Action *a) {}
+    
+    Selection _selection;
 };
 /**
  */
 class TopAction : public Action
 {
 public:
-    TopAction()
+    TopAction() : Action(TOP_SELECTION)
     {
         index=0;
         max=0;
@@ -75,7 +78,7 @@ protected:
 class DigitAction : public Action
 {
 public:
-    DigitAction(int mx)
+    DigitAction(int mx, Selection s) : Action(s)
     {
         index=0;
         _parent=NULL;
@@ -120,6 +123,15 @@ public:
     virtual int getNumber(int rank);
     virtual bool run(lnRotary::EVENTS  event,int ticks);
     virtual WaveForm getWaveForm();
+    virtual Selection selection()
+    {
+        Action *current=top.getCurrent();
+        return current->_selection;
+    }
+    virtual int selectionIndex()
+    {
+        return top.getIndex();
+    }
 protected:
     TopAction   top;
     DigitAction waveForm;
@@ -142,7 +154,7 @@ ActionInterface *createActionInterface()
 /**
  * 
  */
-ActionInterfaceImpl::ActionInterfaceImpl() :  waveForm(3),  hiDigit(10),    loDigit(10),   scaleDigit(7)
+ActionInterfaceImpl::ActionInterfaceImpl() :  waveForm(3,WAVEFORM_SELECTION),  hiDigit(10,HIDIGIT_SELECTION),    loDigit(10,LODIGIT_SELECTION),   scaleDigit(7,SCALE_SELECTION)
 {   
     top.addAction(&waveForm);
     top.addAction(&hiDigit);

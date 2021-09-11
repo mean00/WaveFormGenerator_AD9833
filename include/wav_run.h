@@ -11,6 +11,15 @@ enum WaveForm
     WAVE_TRIANGLE=1,
     WAVE_SQUARE=2,
 };
+
+enum Selection
+{
+    TOP_SELECTION,
+    WAVEFORM_SELECTION,
+    HIDIGIT_SELECTION,
+    LODIGIT_SELECTION,
+    SCALE_SELECTION,
+};
 /**
  * 
  */
@@ -24,6 +33,8 @@ public:
     virtual int getNumber(int rank)=0;
     virtual bool run(lnRotary::EVENTS  event,int ticks)=0;
     virtual WaveForm getWaveForm()=0;
+    virtual Selection selection()=0;
+    virtual int selectionIndex()=0;
 };
 
 ActionInterface *createActionInterface();

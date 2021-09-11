@@ -19,8 +19,9 @@ public:
     {
       
     }
-    void drawDigit(int column, int value);
-    void displayWaveForme(int waveForme);
+    void drawTab(int tab);
+    void drawDigit(int column, int value,bool highlight);
+    void displayWaveForme(int waveForme,bool hilight);
     void drawFrequency(const char *fq);
     OLEDCore *_ssd;     
 };

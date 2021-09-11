@@ -62,14 +62,28 @@ void setup()
 void redraw()
 {
     char fq[20];
-    action->getFrequencyAsString(fq,19);    
+    action->getFrequencyAsString(fq,19);  
+    Selection sel=action->selection();
     WaveForm wf=action->getWaveForm();    
     ssd1306->clrScr();
     display->drawFrequency(fq);    
-    display->displayWaveForme(wf);    
-    display->drawDigit(0, action->getNumber(0));
-    display->drawDigit(1, action->getNumber(1));
-    display->drawDigit(2, action->getNumber(2));
+    bool hl;
+    
+    if(sel==TOP_SELECTION)
+    {
+        display->drawTab(action->selectionIndex());
+    }
+    
+     if(sel==WAVEFORM_SELECTION) hl=true; else hl=false;
+    display->displayWaveForme(wf,hl);   
+
+    
+#define DIGIT(sl,dex)     if(sel==sl) hl=true; else hl=false; \
+    display->drawDigit(dex, action->getNumber(dex),hl);
+    
+    DIGIT(HIDIGIT_SELECTION,0)
+    DIGIT(LODIGIT_SELECTION,1)
+    DIGIT(SCALE_SELECTION,  2)
     
     ssd1306->update();
 }
