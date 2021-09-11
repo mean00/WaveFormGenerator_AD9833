@@ -1,4 +1,7 @@
 # WaveFormGenerator_AD9833
+
+NB: The old version using an Arduino nano is on the legacy_atmel branch.
+
 Simple waveform generator, using AD9833 + rotary encoder + SSD1306 oled screen.
 It can output triangle/sinusoidal/rectangular waveforms.
 
