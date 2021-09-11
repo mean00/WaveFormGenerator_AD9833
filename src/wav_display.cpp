@@ -74,7 +74,7 @@ void WavDisplay::drawFrequency(const char *fq)
 {
     _ssd->setFontSize(OLEDCore::SmallFont);
     int n=strlen(fq);
-    _ssd->print(96-n*8,60,fq);
+    _ssd->print(96-n*8,63,fq);
 }
 
 // EOF

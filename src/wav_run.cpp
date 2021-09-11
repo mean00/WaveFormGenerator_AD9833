@@ -196,33 +196,26 @@ WaveForm  ActionInterfaceImpl::getWaveForm()
  * 
  * @param fq
  */
+
+const char scaleChar[4]={' ','k','M','G'};
+
 void ActionInterfaceImpl::getFrequencyAsString(char *tmp, int maxSize)
 {
     int scale=scaleDigit.getIndex();
     int r=scale%3;
     int t=(scale-r)/3;
-    const char *s="?";
-    switch(t)
-    {
-        case 0: s="";break;
-        case 1: s="k";break;
-        case 2: s="M";break;
-        default:
-            xAssert(0);
-            break;
-    }
+    
     int  f=(hiDigit.getIndex()*10)+loDigit.getIndex();
     for(int i=0;i<r;i++) f=f*10.;
-    
-    
-    int q=f%10;
-    int p=f/10;
-    if(q)
+    if(f>=1000)
     {
-        snprintf(tmp,maxSize,"%d.%d%sHz",p,q,s);
+        t++;
+        int q=(f/100)%10;
+        int p=f/1000;
+        snprintf(tmp,maxSize,"%d.%d%cHz",p,q,scaleChar[t]);
     }else
     {
-        snprintf(tmp,maxSize,"%d%sHz",p,s);
+        snprintf(tmp,maxSize,"%d%cHz",f,scaleChar[t]);
     }
  //   std::string str=std::string(tmp);       
 }
