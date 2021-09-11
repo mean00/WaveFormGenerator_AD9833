@@ -11,7 +11,6 @@ enum WaveForm
     WAVE_TRIANGLE=1,
     WAVE_SQUARE=2,
 };
-
 /**
  * 
  */

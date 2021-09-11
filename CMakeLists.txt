@@ -22,7 +22,7 @@ SET(s1306 ${CMAKE_SOURCE_DIR}/lnArduino/libraries/simplerSSD1306)
 include_directories(${S1306})
 ADD_LIBRARY(ssd1306  ${s1306}/ssd1306_i2c_lnGd32vf103.cpp ${s1306}/ssd1306_base.cpp ${s1306}/ssd1306_ex.cpp)
 
-SET(SRCS src/wav_run.cpp)
+SET(SRCS src/wav_run.cpp src/wav_display.cpp)
 
 GENERATE_GD32_FIRMWARE(waveForm src/main.cpp ${SRCS} ${AMG})
 target_link_libraries(waveForm ssd1306)

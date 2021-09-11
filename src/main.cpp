@@ -9,13 +9,17 @@
 #include "RotaryEncoder.h"
 
 #include "libraries/simplerSSD1306/ssd1306_i2c_lnGd32vf103.h" // works also with gd32f1/Stm32f1
-#include "FreeSans7pt7b.h"
+#include "fonts/FreeSans7pt7b.h"
+#include "fonts/FreeSansBold24pt7b.h"
 
 #include "wavePinout.h"
 #include "wav_run.h"
+#include "wav_display.h"
+
 simplerAD9833 *ad;
 OLED_lnGd32 *ssd1306;
 lnRotary *rotary;
+WavDisplay *display;
 ActionInterface *action;
 
 void amp(bool onoff)
@@ -43,9 +47,10 @@ void setup()
     i2c->begin(SSD1306_ADR);
     ssd1306=new OLED_lnGd32( *i2c, -1);
     ssd1306->begin();
-    ssd1306->setFontFamily(&FreeSans7pt7b,&FreeSans7pt7b,&FreeSans7pt7b);
+    ssd1306->setFontFamily(&FreeSans7pt7b,&FreeSansBold24pt7b,&FreeSansBold24pt7b);
     ssd1306->setFontSize(OLEDCore::SmallFont);
-
+    //
+    display=new WavDisplay(ssd1306);
     // rotary
     rotary=new lnRotary(ROTARY_PUSH,ROTARY_LEFT,ROTARY_RIGHT);    
     action=createActionInterface();
@@ -57,9 +62,15 @@ void setup()
 void redraw()
 {
     char fq[20];
-    action->getFrequencyAsString(fq,19);
+    action->getFrequencyAsString(fq,19);    
+    WaveForm wf=action->getWaveForm();    
     ssd1306->clrScr();
-    ssd1306->print(1,64,fq);
+    display->drawFrequency(fq);    
+    display->displayWaveForme(wf);    
+    display->drawDigit(0, action->getNumber(0));
+    display->drawDigit(1, action->getNumber(1));
+    display->drawDigit(2, action->getNumber(2));
+    
     ssd1306->update();
 }
 /**
@@ -71,11 +82,10 @@ void updateAD9833(int fq, WaveForm wf)
 {
     switch(wf)
     {
-        case WAVE_SINE: ad->setWaveForm(simplerAD9833::Sine);amp(true);break;
-        case WAVE_TRIANGLE: ad->setWaveForm(simplerAD9833::Triangle);amp(true);break;
-        case WAVE_SQUARE: ad->setWaveForm(simplerAD9833::Square);amp(false);break;
-        default: xAssert(0);
-        break;
+        case WAVE_SINE      : ad->setWaveForm(simplerAD9833::Sine);amp(true);break;
+        case WAVE_TRIANGLE  : ad->setWaveForm(simplerAD9833::Triangle);amp(true);break;
+        case WAVE_SQUARE    : ad->setWaveForm(simplerAD9833::Square);amp(false);break;
+        default             : xAssert(0);break;
     }
     ad->setFrequency(fq);
 }
@@ -108,6 +118,7 @@ void loop()
             if(action->run(event,count))
             {
                 updateAD9833(action->getFrequency(),action->getWaveForm());
+                
                 redraw();
             }
        }
