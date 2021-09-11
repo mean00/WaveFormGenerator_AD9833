@@ -1,7 +1,9 @@
 
 cmake_minimum_required(VERSION 3.0)
 
-include(../common_CMakeLists.cmake)
+SET(AF_FOLDER  ${CMAKE_SOURCE_DIR}/lnArduino/)
+include(./mcuSelect.cmake)
+SET(CMAKE_TOOLCHAIN_FILE ${AF_FOLDER}/lnArduino.cmake)
 
 PROJECT(Hello_gd32_freetos NONE) # the NONE is very important !
 

@@ -62,7 +62,26 @@ void redraw()
     ssd1306->print(1,64,fq);
     ssd1306->update();
 }
-
+/**
+ * 
+ * @param fq
+ * @param wf
+ */
+void updateAD9833(int fq, WaveForm wf)
+{
+    switch(wf)
+    {
+        case WAVE_SINE: ad->setWaveForm(simplerAD9833::Sine);amp(true);break;
+        case WAVE_TRIANGLE: ad->setWaveForm(simplerAD9833::Triangle);amp(true);break;
+        case WAVE_SQUARE: ad->setWaveForm(simplerAD9833::Square);amp(false);break;
+        default: xAssert(0);
+        break;
+    }
+    ad->setFrequency(fq);
+}
+/**
+ * 
+ */
 void loop()
 {
     Logger("Entering main app...\n");
@@ -88,6 +107,7 @@ void loop()
        {
             if(action->run(event,count))
             {
+                updateAD9833(action->getFrequency(),action->getWaveForm());
                 redraw();
             }
        }
