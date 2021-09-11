@@ -190,8 +190,7 @@ int  ActionInterfaceImpl::getFrequency()
     for(int i=0;i<s;i++)
     {
         fq*=10;
-    }
-    fq/=10;
+    }   
     if(!fq) fq=1;
     return fq;
 }

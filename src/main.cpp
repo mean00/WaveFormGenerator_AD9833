@@ -24,7 +24,7 @@ ActionInterface *action;
 
 void amp(bool onoff)
 {
-    digitalWrite(AD9833_AMP, onoff);
+    digitalWrite(AD9833_AMP, !onoff);
 }
 
 /**
