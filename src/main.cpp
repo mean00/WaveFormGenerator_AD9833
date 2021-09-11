@@ -16,7 +16,7 @@
 simplerAD9833 *ad;
 OLED_lnGd32 *ssd1306;
 lnRotary *rotary;
-
+ActionInterface *action;
 
 void amp(bool onoff)
 {
@@ -48,14 +48,19 @@ void setup()
 
     // rotary
     rotary=new lnRotary(ROTARY_PUSH,ROTARY_LEFT,ROTARY_RIGHT);    
-    initLoop();
+    action=createActionInterface();
+    
 }
 /**
  * 
  */
 void redraw()
 {
-    
+    char fq[20];
+    action->getFrequencyAsString(fq,19);
+    ssd1306->clrScr();
+    ssd1306->print(1,64,fq);
+    ssd1306->update();
 }
 
 void loop()
@@ -81,7 +86,7 @@ void loop()
        int count=rotary->getCount();
        if(event)
        {
-            if(runLoop(event,count))
+            if(action->run(event,count))
             {
                 redraw();
             }

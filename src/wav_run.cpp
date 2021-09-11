@@ -107,17 +107,42 @@ protected:
 };
 
 
-TopAction   top;
-DigitAction waveForm(3);
-DigitAction hiDigit(10);
-DigitAction loDigit(10);
-DigitAction scaleDigit(7);
-
-static void updateScreenAndGen(void);
 /**
  * 
  */
-void initLoop()
+class ActionInterfaceImpl: public ActionInterface
+{
+public:
+            ActionInterfaceImpl();
+    virtual ~ActionInterfaceImpl() {}
+    virtual int getFrequency();
+    virtual void getFrequencyAsString(char *out, int maxSize);
+    virtual int getNumber(int rank);
+    virtual bool run(lnRotary::EVENTS  event,int ticks);
+    virtual WaveForm getWaveForm();
+protected:
+    TopAction   top;
+    DigitAction waveForm;
+    DigitAction hiDigit;
+    DigitAction loDigit;
+    DigitAction scaleDigit;
+    
+};
+/**
+ * 
+ * @return 
+ */
+ActionInterface *createActionInterface()
+{
+    return new ActionInterfaceImpl;
+    
+    
+}
+
+/**
+ * 
+ */
+ActionInterfaceImpl::ActionInterfaceImpl() :  waveForm(3),  hiDigit(10),    loDigit(10),   scaleDigit(7)
 {   
     top.addAction(&waveForm);
     top.addAction(&hiDigit);
@@ -129,9 +154,24 @@ void initLoop()
 }
 /**
  * 
+ * @param rank
  * @return 
  */
-int  getFrequency()
+int ActionInterfaceImpl::getNumber(int rank)
+{
+    switch(rank)
+    {
+        case 0: return hiDigit.getIndex();break;
+        case 1: return loDigit.getIndex();break;
+        case 2: return scaleDigit.getIndex();break;
+        default: xAssert(0);return 0;break;
+    }
+}
+/**
+ * 
+ * @return 
+ */
+int  ActionInterfaceImpl::getFrequency()
 {
     int fq=(hiDigit.getIndex()*10+loDigit.getIndex());
     int s=scaleDigit.getIndex();
@@ -148,15 +188,50 @@ int  getFrequency()
  * 
  * @return 
  */
-extern WaveForm  getWaveForm()
+WaveForm  ActionInterfaceImpl::getWaveForm()
 {
     return (WaveForm)waveForm.getIndex();
 }
 /**
  * 
+ * @param fq
+ */
+void ActionInterfaceImpl::getFrequencyAsString(char *tmp, int maxSize)
+{
+    int scale=scaleDigit.getIndex();
+    int r=scale%3;
+    int t=(scale-r)/3;
+    const char *s="?";
+    switch(t)
+    {
+        case 0: s="";break;
+        case 1: s="k";break;
+        case 2: s="M";break;
+        default:
+            xAssert(0);
+            break;
+    }
+    int  f=(hiDigit.getIndex()*10)+loDigit.getIndex();
+    for(int i=0;i<r;i++) f=f*10.;
+    
+    
+    int q=f%10;
+    int p=f/10;
+    if(q)
+    {
+        snprintf(tmp,maxSize,"%d.%d%sHz",p,q,s);
+    }else
+    {
+        snprintf(tmp,maxSize,"%d%sHz",p,s);
+    }
+ //   std::string str=std::string(tmp);       
+}
+
+/**
+ * 
  * @param event
  */
-bool runLoop(  lnRotary::EVENTS  event,int count)
+bool ActionInterfaceImpl::run(  lnRotary::EVENTS  event,int count)
 {    
     bool dirty=false;
     
@@ -188,5 +263,5 @@ bool runLoop(  lnRotary::EVENTS  event,int count)
     return dirty;
 }
 
-// eof
+// EOF
 

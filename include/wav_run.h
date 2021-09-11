@@ -2,10 +2,9 @@
 
 #pragma once
 
-extern void initLoop();
-extern bool runLoop(  lnRotary::EVENTS  event,int count);
-extern int  getFrequency();
-
+#include "string"
+/**
+ */
 enum WaveForm
 {
     WAVE_SINE=0,
@@ -13,5 +12,20 @@ enum WaveForm
     WAVE_SQUARE=2,
 };
 
-extern WaveForm  getWaveForm();
+/**
+ * 
+ */
+class ActionInterface
+{
+public:
+            ActionInterface() {}
+    virtual ~ActionInterface() {};
+    virtual int getFrequency()=0;
+    virtual void getFrequencyAsString(char *out, int maxSize)=0;
+    virtual int getNumber(int rank)=0;
+    virtual bool run(lnRotary::EVENTS  event,int ticks)=0;
+    virtual WaveForm getWaveForm()=0;
+};
+
+ActionInterface *createActionInterface();
 //EOF
