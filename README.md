@@ -11,6 +11,7 @@ Build instruction :
 * cd build && cmake ..
 * make
 
-![screenshot](schematics/pic.jpg?raw=true "front")
-![screenshot](schematics/schematic.png?raw=true "schem")
+![screenshot](schematics/ad_front.jpg?raw=true "front")
+![screenshot](schematics/ad_top.png?raw=true "top")
+![screenshot](schematics/schematic.pdf?raw=true "schem")
 
