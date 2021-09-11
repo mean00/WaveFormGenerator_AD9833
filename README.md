@@ -11,6 +11,17 @@ Build instruction :
 * cd build && cmake ..
 * make
 
+
+Careful on the opamp.
+Take one that is :
+* Rail to rail
+* Have high enough V/us rise time
+* Have enough gain/bandwidth product
+
+With a MCP602 as amplifider, the signal is good till ~ 350 kHz
+With a LM358 it's much lower, like ~ 150 kHZ
+The square signal is directly from the ad9833 to avoid it being smoother by the opamp.
+
 ![screenshot](schematics/ad_front.jpg?raw=true "front")
 ![screenshot](schematics/ad_top.jpg?raw=true "top")
 ![screenshot](schematics/schematic.pdf?raw=true "schem")
