@@ -12,6 +12,6 @@ Build instruction :
 * make
 
 ![screenshot](schematics/ad_front.jpg?raw=true "front")
-![screenshot](schematics/ad_top.png?raw=true "top")
+![screenshot](schematics/ad_top.jpg?raw=true "top")
 ![screenshot](schematics/schematic.pdf?raw=true "schem")
 
